@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "./ioutils"
 
 func maopao() {
 	a := [20]int{18,1,45,22,333,25,72,37,168,19,52,92,29,12,89,62,97,28,54}
@@ -101,4 +102,5 @@ func main() {
 	}
 	delete(m, 1);
 	fmt.Println(m)
+	ioutils.Iohelp();
 }

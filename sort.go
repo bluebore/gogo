@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 )
 
 func sort(arr []int) {
@@ -17,24 +19,32 @@ func sort(arr []int) {
 	}
 }
 
-func bisearch(arr []int, v int) int{
+func biSearch(arr []int, v int) int {
 	l := 0;
 	h := len(arr) - 1;
-	for ;l < h; {
-		m := (l+h+1)/2
+	for l < h {
+		m := (l + h + 1) / 2
 		if arr[m] <= v {
 			l = m
 		} else {
-			h = m - 1;
+			h = m - 1
 		}
 	}
 	return l
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		return
+	}
+	v,err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		print("Bad param~\n");
+		return
+	}
 	arr := []int{18,1,45,22,333,25,72,37,168,19,52,92,29,12,89,62,97,28,54}
 	sort(arr);
 	fmt.Println(arr);
-	n := bisearch(arr, 29)
+	n := biSearch(arr, v)
 	fmt.Println(n);
 }
