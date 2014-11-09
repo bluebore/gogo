@@ -2,25 +2,30 @@ package main
 
 import (
 	"fmt"
-	"runtime"
-	"sync"
 )
 
 func main() {
 	c1, c2 := make(chan int), make(chan string)
 	o := make(chan bool, 2)
 	go func() {
+		a, b := false, false
 		for {
 			select {
 			case v, ok := <-c1:
 				if !ok {
-					o <- true
+					if !a {
+						o <- true
+						a = true
+					}
 					break
 				}
 				fmt.Println("c1", v)
 			case v, ok := <-c2:
 				if !ok {
-					o <- true
+					if !b {
+						o <- true
+						b = true
+					}
 					break;
 				}
 				fmt.Println("c2", v)
@@ -34,6 +39,7 @@ func main() {
 	c2 <- "hello"
 
 	close(c1)
+	close(c2)
 
 	for i := 0; i < 2; i++ {
 		<-o;
